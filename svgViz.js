@@ -23,28 +23,25 @@ document.getElementById("displacement")
 
 
 
-var drawSuspension = function(a = 300, b = 300, c = 0,
-                                d = 0, e = 0, 
-                                f = 100, g = -100, h = 200){
+var drawSuspension = function(L_upper = 300,
+                                L_lower = 300, 
+                                A_upper0 = 0,
+                                A_lower0 = 0, 
+                                kpi = 0, 
+                                scrubR = 100, 
+                                Zb = -100, 
+                                knuckle = 200){
 
+    
+    //ground
     s.line(-1000,0,1000,0).attr({stroke: "black", strokeWidth: 2})
-
-    // Variables:
-    L_upper = a;
-    L_lower = b;
-    A_upper0 = c;
-    A_lower0 = d;
-    kpi = e;
-    scrubR = f;
-    Zb = g; //negative
-    k = h;
 
     //determined from Variables
     //Be careful with those negative z values!
-    yBE = Snap.tan(kpi)*(-Zb)+scrubR;
+    var yBE = Snap.tan(kpi)*(-Zb)+scrubR;
 
-    By0 = Snap.cos(A_lower0)*L_lower;
-    Bz0 = Zb;
+    var By0 = Snap.cos(A_lower0)*L_lower;
+    var Bz0 = Zb;
 
     Ey0 = By0 + yBE;
     Ez0 = 0;
@@ -52,8 +49,8 @@ var drawSuspension = function(a = 300, b = 300, c = 0,
     Ay0 = 0;
     Az0 = Snap.sin(A_lower0)*L_lower+Zb;
 
-    Dy0 = By0-k*Snap.sin(kpi);
-    Dz0 = Zb-k*Snap.cos(kpi);
+    var Dy0 = By0-knuckle*Snap.sin(kpi);
+    var Dz0 = Zb-knuckle*Snap.cos(kpi);
 
     Cy0 = Dy0-Snap.cos(A_upper0)*L_upper;
     Cz0 = Dz0+Snap.sin(A_upper0)*L_upper;
@@ -67,54 +64,72 @@ var drawSuspension = function(a = 300, b = 300, c = 0,
     connectLZ0 = (Bz0+Dz0)/2;
 
     //////////////////////////////////////
-
-    var topCircle = s.circle(Cy0,Cz0,L_upper).attr({
-        fill:"none",stroke:"red",strokeWidth:2});
-    var bottomCircle = s.circle(Ay0,Az0,L_lower).attr({
-        fill:"none",stroke:"green",strokeWidth:2});
-
-    var lpivot = s.circle(Ay0,Az0,5);
-    var upivot = s.circle(Cy0,Cz0,5);
-
-    var lbj = s.circle(By0,Bz0,5);
-    var ubj = s.circle(Dy0,Dz0,5);
-
-    var center = s.circle(0,0,5);
-
-    var contact = s.circle(Ey0,Ez0,5).attr({fill:"white"});
-
-    var lArm = s.line(Ay0,Az0, By0,Bz0).attr({
-            fill: "#fc0",
-            stroke: "#000",
-            strokeWidth: 2
-        });
-
-    var uArm = s.line(Cy0,Cz0, Dy0,Dz0).attr({
-            fill: "#fc0",
-            stroke: "#000",
-            strokeWidth: 2
-        });
-
-    var knuckle = s.line(By0,Bz0, Dy0,Dz0).attr({
-            fill: "#fc0",
-            stroke: "#000",
-            strokeWidth: 2
-        });
-
-
-
+    
     var connect = s.line(connectLY0,connectLZ0, Ey0 - 50 ,connectLZ0).attr({
-            fill: "#fc0",
-            stroke: "#000",
-            strokeWidth: 2
-        });
-    var wheel = s.rect(Ey0 - 50,Ez0-400,100,400);
+        fill: "#fc0",
+        stroke: "#000",
+        strokeWidth: 2
+    });
+    var wheel = s.rect(Ey0 - 50,Ez0-400,100,400).attr({fill:"none",
+                                                        stroke:"black",
+                                                        strokeWidth:3});
     var contact = s.circle(Ey0,Ez0,5).attr({fill:"white"});
 
     var wheelAssembly = s.g(wheel,contact,connect);
+
+    //topCircle
+    /*s.circle(Cy0,Cz0,L_upper).attr({
+        fill:"none",
+        stroke:"red",
+        strokeWidth:2
+    });
+    */
+    
+    //bottomCircle
+    /*
+    s.circle(Ay0,Az0,L_lower).attr({
+        fill:"none",
+        stroke:"green",
+        strokeWidth:2
+    });
+    */
+    
+    //lower pivot
+    s.circle(Ay0,Az0,5);
+    
+    //upper pivot
+    s.circle(Cy0,Cz0,5);
+
+    //lower ball joint
+    s.circle(By0,Bz0,5);
+    
+    //upper ball joint
+    s.circle(Dy0,Dz0,5);
+
+    //lower Arm
+    s.line(Ay0,Az0, By0,Bz0).attr({
+            fill: "#fc0",
+            stroke: "#000",
+            strokeWidth: 2
+        });
+
+    //upper Arm 
+    s.line(Cy0,Cz0, Dy0,Dz0).attr({
+            fill: "#fc0",
+            stroke: "#000",
+            strokeWidth: 2
+        });
+
+    //knuckle
+    s.line(By0,Bz0, Dy0,Dz0).attr({
+            fill: "#fc0",
+            stroke: "black",
+            strokeWidth: 5
+        });
+
     
     ////////////////////////////////////////////////
-    draw2dGraph(L_upper,L_lower,A_upper0,A_lower0,kpi,scrubR,Zb,k);
+    draw2dGraph(L_upper,L_lower,A_upper0,A_lower0,kpi,scrubR,Zb,knuckle);
     //////////////////////////////////////////////////
     
     
@@ -143,12 +158,25 @@ var draw = function(){
 //////////////////////////////////////////////////////////////
 
 var showDisplacement = function(){
+    
+    var displacement = Number(document.getElementById("displacement").value);
+    
+    //main Variables
+    var L_upper = Number(document.getElementById("a").value);
+    var L_lower = Number(document.getElementById("b").value);
+    var A_upper0 = Number(document.getElementById("c").value);
+    var A_lower0 = Number(document.getElementById("d").value);
+    var kpi = Number(document.getElementById("e").value);
+    var scrubR = Number(document.getElementById("f").value);
+    var Zb = Number(document.getElementById("g").value);
+    var knuckle = Number(document.getElementById("h").value);
 
+    //delete wheel/knuckle assembly if it exists
     if(typeof wheelAssembly != 'undefined'){
         wheelAssembly.remove();
         knuckleAssembly.remove();
     }
-    var displacement = Number(document.getElementById("displacement").value);
+    
 
     var A_lower = A_lower0 + displacement;
     var By = Snap.cos(A_lower)*L_lower;
@@ -159,7 +187,7 @@ var showDisplacement = function(){
     var L_bc = Math.sqrt(h*h + w*w);
 
     var A_bc = Snap.atan(h/w);
-    var A_cbd = Snap.acos((L_bc*L_bc + k*k - L_upper*L_upper)/(2*L_bc*k));
+    var A_cbd = Snap.acos((L_bc*L_bc + knuckle*knuckle - L_upper*L_upper)/(2*L_bc*knuckle));
     var A_bd = A_bc + A_cbd;
 
     var camber = A_bd - A_bd0;
@@ -172,14 +200,23 @@ var showDisplacement = function(){
     var bump = -Ez;
     var scrub = Ey-Ey0;
 
-    var Dy = By - Snap.cos(A_bd)*k;
-    var Dz = Bz - Snap.sin(A_bd)*k;
+    var Dy = By - Snap.cos(A_bd)*knuckle;
+    var Dz = Bz - Snap.sin(A_bd)*knuckle;
 
     var connectLY = (By+Dy)/2;
     var connectLZ = (Bz+Dz)/2;
 
 //////////////////////////////////////
-
+    
+    var lowerArm = s.line(Ay0,Az0, By,Bz).attr({
+            stroke: "white",
+            strokeWidth: 2
+        });
+    var upperArm = s.line(Cy0,Cz0, Dy,Dz).attr({
+            stroke: "white",
+            strokeWidth: 2
+        });
+    
     var lbj1 = s.circle(By,Bz,5).attr({fill:"orange"});
     var ubj1 = s.circle(Dy,Dz,5).attr({fill:"red"});
     var knuckle1 = s.line(By,Bz,Dy,Dz).attr({
@@ -188,7 +225,7 @@ var showDisplacement = function(){
             strokeWidth: 2
         });
 
-    knuckleAssembly = s.g(lbj1,ubj1,knuckle1);
+    knuckleAssembly = s.g(lowerArm,upperArm,lbj1,ubj1,knuckle1);
 
     var connect1 = s.line(connectLY0,connectLZ0, Ey0 - 50 ,connectLZ0).attr({
             stroke: "white",
