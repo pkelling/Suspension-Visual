@@ -23,14 +23,14 @@ document.getElementById("displacement")
 
 
 
-var drawSuspension = function(L_upper = 300,
-                                L_lower = 300, 
-                                A_upper0 = 0,
-                                A_lower0 = 0, 
-                                kpi = 0, 
-                                scrubR = 100, 
-                                Zb = 100, 
-                                knuckle = 200){
+var drawSuspension = function(L_upper,
+                                L_lower, 
+                                A_upper0,
+                                A_lower0, 
+                                kpi, 
+                                scrubR, 
+                                Zb, 
+                                knuckle){
 
     
     //ground
@@ -135,8 +135,6 @@ var drawSuspension = function(L_upper = 300,
     
 }
 
-drawSuspension();
-
 var draw = function(){
 
     s.clear();
@@ -153,6 +151,7 @@ var draw = function(){
     drawSuspension(a,b,c,d,e,f,g,h);
 }
 
+draw();
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
@@ -200,7 +199,7 @@ var showDisplacement = function(){
     var bump = Ez;
     var scrub = Ey-Ey0;
 
-    var Dy = By + Snap.cos(A_bd)*knuckle;
+    var Dy = By - Snap.cos(A_bd)*knuckle;
     var Dz = Bz + Snap.sin(A_bd)*knuckle;
 
     var connectLY = (By+Dy)/2;
@@ -210,31 +209,31 @@ var showDisplacement = function(){
     
     var lowerArm = s.line(Ay0,-Az0, By,-Bz).attr({
             stroke: "white",
-            strokeWidth: 2
+            strokeWidth: 4
         });
     var upperArm = s.line(Cy0,-Cz0, Dy,-Dz).attr({
             stroke: "white",
-            strokeWidth: 2
+            strokeWidth: 4
         });
     
     var lbj1 = s.circle(By,-Bz,5).attr({fill:"orange"});
     var ubj1 = s.circle(Dy,-Dz,5).attr({fill:"red"});
     var knuckle1 = s.line(By,-Bz,Dy,-Dz).attr({
             fill: "#fc0",
-            stroke: "#000",
-            strokeWidth: 2
+            stroke: "white",
+            strokeWidth: 4
         });
 
     knuckleAssembly = s.g(lowerArm,upperArm,lbj1,ubj1,knuckle1);
 
     var connect1 = s.line(connectLY0,-connectLZ0, Ey0 - 50 ,-connectLZ0).attr({
             stroke: "white",
-            strokeWidth: 2
+            strokeWidth: 3
         });
     var wheel1 = s.rect(Ey0 - 50,Ez0-400,100,400).attr({
         fill: "none",
         stroke: "white",
-        strokeWidth: 2
+        strokeWidth: 3
         });
     var contact1 = s.circle(Ey0,Ez0,5).attr({fill:"white"});
 
