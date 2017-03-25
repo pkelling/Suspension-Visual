@@ -2,7 +2,7 @@ var s = Snap("#svg");
 
 //////////////////////////////////
 
-document.getElementById("main")
+document.getElementById("mainForm")
     .addEventListener("keyup", function(event) {
     event.preventDefault();
     if (event.keyCode == 13) {
@@ -30,7 +30,9 @@ var drawSuspension = function(L_upper,
                                 kpi, 
                                 scrubR, 
                                 Zb, 
-                                knuckle){
+                                knuckle,
+                                wheel_diameter,
+                                wheel_width){
 
     
     //ground
@@ -65,12 +67,13 @@ var drawSuspension = function(L_upper,
 
     //////////////////////////////////////
     
-    var connect = s.line(connectLY0,-connectLZ0, Ey0 - 50 ,-connectLZ0).attr({
+    var connect = s.line(connectLY0,-connectLZ0, Ey0 - (wheel_width/2) ,-connectLZ0).attr({
         fill: "#fc0",
         stroke: "#000",
         strokeWidth: 2
     });
-    var wheel = s.rect(Ey0 - 50,Ez0-400,100,400).attr({fill:"none",
+    var wheel = s.rect(Ey0 - (wheel_width/2),Ez0-wheel_diameter,
+                        wheel_width,wheel_diameter).attr({fill:"none",
                                                         stroke:"black",
                                                         strokeWidth:3});
     var contact = s.circle(Ey0,Ez0,5).attr({fill:"white"});
@@ -133,7 +136,7 @@ var drawSuspension = function(L_upper,
     //////////////////////////////////////////////////
     
     
-}
+};
 
 var draw = function(){
 
@@ -147,14 +150,17 @@ var draw = function(){
     var f = Number(document.getElementById("f").value);
     var g = Number(document.getElementById("g").value);
     var h = Number(document.getElementById("h").value);
+    var i = Number(document.getElementById("i").value);
+    var j = Number(document.getElementById("j").value);
 
-    drawSuspension(a,b,c,d,e,f,g,h);
-}
+    drawSuspension(a,b,c,d,e,f,g,h,i,j);
+};
 
 draw();
 
 //////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
+
 
 var showDisplacement = function(){
     
@@ -169,6 +175,8 @@ var showDisplacement = function(){
     var scrubR = Number(document.getElementById("f").value);
     var Zb = Number(document.getElementById("g").value);
     var knuckle = Number(document.getElementById("h").value);
+    var wheel_diameter = Number(document.getElementById("i").value);
+    var wheel_width = Number(document.getElementById("j").value);
 
     //delete wheel/knuckle assembly if it exists
     if(typeof wheelAssembly != 'undefined'){
@@ -226,11 +234,12 @@ var showDisplacement = function(){
 
     knuckleAssembly = s.g(lowerArm,upperArm,lbj1,ubj1,knuckle1);
 
-    var connect1 = s.line(connectLY0,-connectLZ0, Ey0 - 50 ,-connectLZ0).attr({
+    var connect1 = s.line(connectLY0,-connectLZ0, Ey0 - (wheel_width/2) ,-connectLZ0).attr({
             stroke: "white",
             strokeWidth: 3
         });
-    var wheel1 = s.rect(Ey0 - 50,Ez0-400,100,400).attr({
+    var wheel1 = s.rect(Ey0 - (wheel_width/2),Ez0-wheel_diameter,
+                        wheel_width,wheel_diameter).attr({
         fill: "none",
         stroke: "white",
         strokeWidth: 3
@@ -246,16 +255,16 @@ var showDisplacement = function(){
     
     document.getElementById("bump").innerHTML = "Bump: " + Math.round(bump*100)/100;
     document.getElementById("camber").innerHTML = "Camber: " + Math.round(camber*100)/100;
-}
-
+};
 
 var clearDisplacement = function(){
     s.clear();
     draw();
+    purgeGraph();
     
     document.getElementById("bump").innerHTML = "";
     document.getElementById("camber").innerHTML = "";
-}
+};
 
 
 //////////////////////////////////////
@@ -293,8 +302,27 @@ var animateSuspension = function(){
 
 
 
-}
+};
 
 var endAnimateSuspension = function(){
     clearInterval(id);
-}
+};
+
+
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+
+var hideMainForm = function(t){
+
+    if(t.value==="hide"){
+        document.getElementById("mainForm").setAttribute('style','display:none;');
+        t.value = "show";
+    }else{
+        document.getElementById("mainForm").setAttribute('style','');
+        t.value = "hide";
+    }
+    
+};
+
+
+

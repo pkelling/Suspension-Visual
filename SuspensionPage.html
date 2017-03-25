@@ -8,6 +8,27 @@
     
 <body>
     
+    
+    <input type="button" value="show" onclick="hideMainForm(this)"/><br/>
+    <form id="mainForm" style="display:none;">
+        Upper Arm Length:   <input type="text" value="250" id="a"/>
+        Upper Arm Angle:    <input type="text" value="5" id="c"/><br/>
+        
+        Lower Arm Length:   <input type="text" value="300" id="b"/>
+        Lower Arm Angle:    <input type="text" value="0" id="d"/><br/><br/>
+        
+        Kingpin Incline:    <input type="text" value="5" id="e"/>
+        Scrub Radius:       <input type="text" value="50" id="f"/><br/><br/>
+        Low Ball Height:    <input type="text" value="100" id="g"/><br/>
+        Knuckle Length:     <input type="text" value="225" id="h"/><br/><br/>
+        
+        Wheel Diameters:    <input type="text" value="400" id="i"/><br/>
+        Wheel Width:        <input type="text" value="100" id="j"/><br/><br/>
+    </form>
+    
+    
+    <br/>
+    
     <div style="position:absolute;">
         <p id="bump" style="position:absolute;width: 200px;"> </p><br/><br/>
         <p id="camber" style="position:absolute;width: 200px;"> </p>
@@ -22,7 +43,8 @@
                 display:inline-block;
                 margin-left:10px;">
         
-        <div id="graph2D" style="width:450px;height:450px;border:2px solid gray;"></div>
+        <div id="camber_graph" style="width:300px;height:300px;border:2px solid gray;resize:both;overflow:auto;"></div>
+        <div id="scrub_graph" style="width:300px;height:300px;border:2px solid gray;resize:both;overflow:auto;"></div>
         <button value="Clear Graph" onclick="purgeGraph()">Clear Graph</button>
         
     </div>
@@ -34,30 +56,14 @@
 
         Displacement Angle:
         <input type="number" step=".5" id="displacement"/><br/>
-        <input type="button" id="displacementButton" value="Show Displacement" onclick="showDisplacement()"/><br/>
         <input type="button" value="Clear Displacement" onclick="clearDisplacement()"/>
     </div>
     
     <br/><br/>
-    
-    <form id="main">
-        Upper Arm Length: <input type="text" value="250" id="a"/>
-        Upper Arm Angle: <input type="text" value="5" id="c"/><br/>
-        
-        Lower Arm Length: <input type="text" value="300" id="b"/>
-        Lower Arm Angle: <input type="text" value="0" id="d"/><br/>
-        
-        Kingpin Incline: <input type="text" value="5" id="e"/>
-        Scrub Radius: <input type="text" value="50" id="f"/><br/><br/>
-        Low Ball Height: <input type="text" value="100" id="g"/><br/>
-        Knuckle Length: <input type="text" value="225" id="h"/><br/><br/>
-    </form>
-    
-    
-    <br/><br/>
 
     <script src="graph.js"></script>
-    <script src="svgViz.js"></script>
+    <script src="camberViz.js"></script>    
+    
     
     
     

@@ -1,0 +1,43 @@
+    To add:
+    
+    //DONE Allow changes in tire width and radius
+    
+    //DONE Show bump vs scrub as subgraph for comparison
+    
+    3) Calculate the effect of roll (for bump and camber)
+        =dependent on track width
+        =show it visually? (need to show both wheels)
+    
+    4) Show 2d effect of anti-dive
+        -calculate anti-dive %
+        -show suspension from side view (w/anti-dive line?)
+    
+    5) Stop worrying so much.
+        -This is about doing something meaningful
+        -The whole reason I'm stressed and frustrated, is because I'm worrying about money
+    
+    6) Make and Show 3d calculations?
+        -The calculations will be much easier than showing them.
+        -To show them, I will need 3d modeling software?
+            =this may not be worth it
+    
+     The longer you wait, the harder actions becomes.
+        -I haven't known what to do this whole time, and look how far I've got, look how much I've learned
+
+
+
+    
+    Random Ideas:
+    -can wix add sign in capabilities with a drag and drop (like creating all of the underlying systems with just a drag);
+    
+    -how much slower will heavy programs be in the browser? (3d modelling?)
+        +even if it's just running on your computer, not loading from internet (like a js computer app)
+    
+    -what if you have 'memories' that only the people "in" the memory can see?
+        +plus you have a personal 'notes' about the memory that only you can see?
+    
+    Just work on it in your spare time.
+        -remember why I was building it in the first place?
+            =to have an easy accessible journal to be able to look back on my life
+    
+    

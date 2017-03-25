@@ -29,8 +29,9 @@ function copyArray(foo){
 
 function draw2dGraph(L_upper,L_lower,A_upper0,A_lower0,kpi,scrubR,Zb,k){
     
-    var x = [];
-    var z = [];
+    var bump_array = [];
+    var camber_array = [];
+    var scrub_array = [];
     
     var L_top_arm = L_upper;
     var L_lower_arm = L_lower;
@@ -87,21 +88,21 @@ function draw2dGraph(L_upper,L_lower,A_upper0,A_lower0,kpi,scrubR,Zb,k){
             var scrub = contact_Y - contact_Y0;
             var camber = Math.degrees(cam_radian);
 
-            x.push(bump);
-            z.push(parseFloat(camber.toFixed(5)));
+            bump_array.push(bump);
+            camber_array.push(parseFloat(camber.toFixed(5)));
+            scrub_array.push(parseFloat(scrub.toFixed(5)));
+            
     }
     
     
     ///////////// Build 2D Graph ///////////////////
-    var trace_2d = {
-                        x:x,
-                        y:z,
+    var camber_trace = {
+                        x:bump_array,
+                        y:camber_array,
                         type:'scatter'
                     };
-
-    var data = [trace_2d];
-    
-    var layout_2d = {
+    var data_camber = [camber_trace];
+    var layout_camber = {
         title:'Bump vs Camber',
         xaxis:{ title: 'Bump' },
         yaxis:{ title: 'Camber' },
@@ -113,12 +114,36 @@ function draw2dGraph(L_upper,L_lower,A_upper0,A_lower0,kpi,scrubR,Zb,k){
         }
     };
     
-    Plotly.plot('graph2D',data,layout_2d);
+    Plotly.plot('camber_graph',data_camber,layout_camber);
+    
+    
+    var scrub_trace = {
+                    x:bump_array,
+                    y:scrub_array,
+                    type: 'scatter'
+                };
+    var data_scrub = [scrub_trace];
+    var layout_scrub = {
+        title:'Bump vs Scrub',
+        xaxis:{ title: 'Bump' },
+        yaxis:{ title: 'Scrub' },
+        margin:{
+            l: 45,
+            r: 45,
+            t: 45,
+            b: 45
+        }
+    };
+    
+    Plotly.plot('scrub_graph',data_scrub,layout_scrub);
 }
 
 
 function purgeGraph(){
-        Plotly.purge('graph2D');
+        Plotly.purge('camber_graph');
+        Plotly.purge('scrub_graph');
+    
+        draw();
 }
 
 
