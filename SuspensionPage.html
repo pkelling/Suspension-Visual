@@ -2,68 +2,134 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <script src="snap.svg.js"></script>
-    <script src="plotly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="extras/style.css">
+    
+    <script src="extras/snap.svg.js" defer></script>
+    <script src="extras/plotly-latest.min.js" defer></script>
+    
+    <script src="calculations.js" defer></script>
+    <script src="goodForNow/graph_bump.js" defer></script>
+    <script src="goodForNow/bump_svg.js" defer></script>
+    <script src="goodForNow/roll_svg.js" defer></script>
+    <script src="antiDive_svg.js" defer></script>
+    
+    <script src="main.js" defer></script>
+    
+    
+    
 </head>
     
 <body>
     
-    
-    <input type="button" value="show" onclick="hideMainForm(this)"/><br/>
-    <form id="mainForm" style="display:none;">
-        Upper Arm Length:   <input type="text" value="250" id="a"/>
-        Upper Arm Angle:    <input type="text" value="5" id="c"/><br/>
+    <div style="display:none;">
         
-        Lower Arm Length:   <input type="text" value="300" id="b"/>
-        Lower Arm Angle:    <input type="text" value="0" id="d"/><br/><br/>
-        
-        Kingpin Incline:    <input type="text" value="5" id="e"/>
-        Scrub Radius:       <input type="text" value="50" id="f"/><br/><br/>
-        Low Ball Height:    <input type="text" value="100" id="g"/><br/>
-        Knuckle Length:     <input type="text" value="225" id="h"/><br/><br/>
-        
-        Wheel Diameters:    <input type="text" value="400" id="i"/><br/>
-        Wheel Width:        <input type="text" value="100" id="j"/><br/><br/>
-    </form>
-    
-    
-    <br/>
-    
-    <div style="position:absolute;">
-        <p id="bump" style="position:absolute;width: 200px;"> </p><br/><br/>
-        <p id="camber" style="position:absolute;width: 200px;"> </p>
-    </div>
-    
-    <svg id="svg" viewbox="-700 -600 1400 900" height="400px" 
-         style="background:gray;
-                display:inline-block;">
-    </svg>
-    
-    <div style="position:absolute;
-                display:inline-block;
-                margin-left:10px;">
-        
-        <div id="camber_graph" style="width:300px;height:300px;border:2px solid gray;resize:both;overflow:auto;"></div>
-        <div id="scrub_graph" style="width:300px;height:300px;border:2px solid gray;resize:both;overflow:auto;"></div>
-        <button value="Clear Graph" onclick="purgeGraph()">Clear Graph</button>
-        
-    </div>
-        
-        
-    <div style="margin-left:10px;">
-        <input type="button" value="Animate" onclick="animateSuspension()"/>
-        <input type="button" value="End Animation" onclick="endAnimateSuspension()"/><br/><br/>
+        <h2> Suspension Values</h1>
+        <input type="button" value="Show" onclick="hideMainForm(this,'hidden','mainForm','Show','Hide')"/><br/>
+        <div id="mainForm" style="display:none;">
 
-        Displacement Angle:
-        <input type="number" step=".5" id="displacement"/><br/>
-        <input type="button" value="Clear Displacement" onclick="clearDisplacement()"/>
-    </div>
-    
-    <br/><br/>
+            <div style="display:inline-block;">
+                <input type="button" value="-Standard Inputs" 
+                       onclick="hideMainForm(this,'visible','mainFormLAs','-Standard Inputs','+Standard Inputs')"/><br/>
+                <form id="mainFormLAs" style="display:inline-block;">
+                    Standard Inputs <br/>
+                    Upper Arm Length:   <input type="text" value="250" id="L_upper"/><br/>
+                    Upper Arm Angle:    <input type="text" value="5" id="A_upper0"/><br/>
 
-    <script src="graph.js"></script>
-    <script src="camberViz.js"></script>    
+                    Lower Arm Length:   <input type="text" value="300" id="L_lower"/><br/>
+                    Lower Arm Angle:    <input type="text" value="0" id="A_lower0"/><br/>
+
+                    Kingpin Incline:    <input type="text" value="5" id="kpi"/><br/>
+                    Low Ball Height:    <input type="text" value="100" id="Zb"/><br/>
+                    Knuckle Length:     <input type="text" value="225" id="knuckle"/><br/><br/>      
+                </form><br/>
+
+
+                <input type="button" value="+Coordinate Inputs" 
+                       onclick="hideMainForm(this,'hidden','mainFormCoords','+Coordinate Inputs','-Coordinate Inputs')"/><br/>
+                <form id="mainFormCoords" style="display:none;">
+
+                    Upper Ball Joint Y: <input type="text" id="Dy0"/><br/>
+                    Upper Ball Joint Z: <input type="text" id="Dz0"/><br/>
+
+                    Upper Pivot Y:      <input type="text" id="Cy0"/><br/>
+                    Upper Pivot Z:      <input type="text" id="Cz0"/><br/>
+
+                    Lower Ball Joint Y: <input type="text" id="By0"/><br/>
+                    Lower Ball Joint Z: <input type="text" id="Bz0"/><br/>
+
+                    Lower Pivot Y:      <input type="text" id="Ay0"/><br/>
+                    Lower Pivot Z:      <input type="text" id="Az0"/><br/>
+
+                </form><br/>
+            </div>
+
+            <form id="mainFormBoth" style="position:absolute;display:inline-block;margin-left:25px;">
+                    Scrub Radius:       <input type="text" value="50" id="scrubR"/><br/>            
+                    Wheel Diameters:    <input type="text" value="400" id="wheel_diameter"/><br/>
+                    Wheel Width:        <input type="text" value="100" id="wheel_width"/><br/>
+                    Track Width:        <input type="text" value="1000" id="track"/><br/><br/>
+            </form>
+
+        </div><br/>
+
+        <h2> Bump Info </h2>
+        <div id="bump_svgInfo" style="position:absolute;">
+            <p id="bump"> </p><br/>
+            <p id="camber"> </p><br/>
+            <p id="scrub"> </p><br/>
+        </div>
+        <svg id="bump_svg" viewbox="0 -700 800 1000"></svg>
+        <div id="graphs_div">  
+            <div id="camber_graph"></div>
+            <div id="scrub_graph"></div><br/>
+            <input type="button" value="Clear Graphs" onclick="purgeGraph()"/>   
+        </div>       
+        <div id="displacement_inputs">
+            <input type="button" value="Animate" onclick="animateSuspension()"/>
+            <input type="button" value="End Animation" onclick="end_animateSuspension()"/><br/><br/>
+
+            Displacement Angle:
+            <input type="number" step=".5" id="displacement"/><br/>
+            <input type="button" value="Clear Displacement" onclick="clearDisplacement()"/>
+        </div>
+
+
+        <hr style="margin-top:100px;margin-bottom:100px;"/>
+
+        <h2> Roll Info </h2>
+        <div id="roll_svgInfo" style="position:absolute;">
+            <p id="roll_camber_R"> </p><br/>
+            <p id="roll_camber_L"> </p><br/>
+        </div>
+        <svg id="roll_svg" viewbox="-700 -700 1400 1000"></svg>
+        <div id="roll_graphAndInputs">
+            <div id="roll_graph"></div><br/>
+            Displacement Start: <input id="roll_graph_start" type="text" value="-15"/><br/>
+            Displacement End:   <input id="roll_graph_end" type="text" value="15"/><br/>
+            <input type="button" value="Plot Roll" onclick="plotRollWorker()"/>
+        </div><br/>
+        Roll: <input type="number" min="-25" max="25" step=".5" id="roll_displacement"/><br/>
+        <input type="button" value="Clear" onclick="clearRoll()"/><br/><br/>
+
+
+        <hr style="margin-top:100px;margin-bottom:100px;"/>
     
+    </div>
+    <h2> Anti-Dive </h2>
+    
+    <h3> Variables: </h3>
+    <form id="antiDiveForm">
+        Caster: <input id="caster" type="number" value="3"/><br/>
+        Caster Trail: <input id="caster_trail" type="number" value="5"/><br/>
+        Top Arm Angle: <input id="A_topAD" type="number" value="-5"/><br/>
+        Bottom Arm Angle: <input id="A_bottomAD" type="number" value="5"/><br/>
+        Center of Gravity (X)<input id="center_gravityX" type="text" value="900"/><br/>
+        Center of Gravity (Z)<input id="center_gravityZ" type="text" value="450"/><br/>
+        Wheelbase: <input id="wheelbase" type="text" value="1500"/><br/>
+        Percentage of Braking (front)<input id="fr_brakePercent" type="number" min="0" max="100" value="65"/><br/>
+    </form><br/>
+    <svg id="antiDive_svg" viewbox="-250 -700 2000 800"></svg>
+
     
     
     

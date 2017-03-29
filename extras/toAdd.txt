@@ -1,28 +1,29 @@
     To add:
     
-    //DONE Allow changes in tire width and radius
+    Test against suspension-analyzer to make sure my math is good
     
-    //DONE Show bump vs scrub as subgraph for comparison
-    
-    3) Calculate the effect of roll (for bump and camber)
+    // DONE Calculate the effect of roll (for bump and camber)
         =dependent on track width
         =show it visually? (need to show both wheels)
     
-    4) Show 2d effect of anti-dive
+    3) Show 2d effect of anti-dive
         -calculate anti-dive %
         -show suspension from side view (w/anti-dive line?)
     
-    5) Stop worrying so much.
+    4) Stop worrying so much.
         -This is about doing something meaningful
         -The whole reason I'm stressed and frustrated, is because I'm worrying about money
     
-    6) Make and Show 3d calculations?
+    5) Make and Show 3d calculations?
         -The calculations will be much easier than showing them.
         -To show them, I will need 3d modeling software?
             =this may not be worth it
     
      The longer you wait, the harder actions becomes.
         -I haven't known what to do this whole time, and look how far I've got, look how much I've learned
+
+
+
 
 
 

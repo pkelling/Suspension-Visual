@@ -1,0 +1,73 @@
+table{
+    width: 400px;
+}
+table, tr,th,td{
+    border: 1px solid black;
+}
+th{
+    width: 100px;
+}
+
+
+#bump,#camber,#scrub{
+    position:absolute;
+    width: 200px;
+}
+#bump_svg{
+    height: 450px;
+    background:gray;
+    display:inline-block;
+}
+#displacement_inputs{
+    margin-left: 10px;
+}
+
+
+#graphs_div{
+    position:absolute;
+    display:inline-block;
+    margin-left:10px;
+}
+#camber_graph, #scrub_graph{
+    display: inline-block;
+    width:300px;
+    height:300px;
+    border:2px solid gray;
+    resize:both;
+    overflow:auto;
+}
+
+
+#roll_camber_R,#roll_camber_L{
+    position:absolute;
+    width: 200px;
+}
+#roll_svg{
+    height: 450px;
+    background: rgba( 147, 147, 147, 1 );
+}
+
+#roll_graphAndInputs{
+    position:absolute;
+    display:inline-block;
+    margin-left:10px;
+}
+#roll_graph{
+    width:400px;
+    height:400px;
+    border:2px solid gray;
+    resize:both;
+    overflow:auto;
+}
+
+/* Hide up-down arrows in firefox */
+#roll_displacement {
+    -moz-appearance: textfield;
+}
+
+
+#antiDive_svg{
+    margin-left: 20px;
+    height: 250px;
+    background: gray;
+}
